@@ -19,14 +19,14 @@ class OrderController extends Controller
             // Adminam — visi status=1 pasūtījumi
             $orders = Order::where('status', 1)
                            ->orderBy('created_at', 'desc')
-                           ->get();
+                           ->paginate(10);
         } else {
             // Parastajam lietotājam — tikai viņa pasūtījumi ar status=1
             $orders = Auth::user()
                           ->orders()
                           ->where('status', 1)
                           ->orderBy('created_at', 'desc')
-                          ->get();
+                          ->paginate(10);
         }
 
         return view('auth.orders.index', compact('orders'));

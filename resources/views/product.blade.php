@@ -18,10 +18,25 @@
       <h4 class="text-success">{{ number_format($product->price,2) }} EUR</h4>
       <p class="mt-4">{{ $product->description }}</p>
 
-      <form action="{{ route('basket-add', $product) }}" method="POST" class="mt-4">
+      <form action="{{ route('basket-add', ['id' => $product->id]) }}" method="POST" class="mt-4">
         @csrf
-        <button type="submit" class="btn btn-success btn-lg">Pievienot grozam</button>
-      </form>
+        <input type="hidden" name="available_count" value="{{ $product->count }}">
+        @if($product->isAvailable())
+            <button type="submit" class="btn btn-success btn-lg">Pievienot grozam</button>
+        @else
+            <span class="text-danger">Nav pieejams</span>
+        @endif
+    </form>
+    @if($errors->any())
+    <div class="alert alert-danger">
+        <ul>
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+@endif
+    
     </div>
   </div>
 </div>

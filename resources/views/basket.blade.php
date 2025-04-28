@@ -20,47 +20,41 @@
       </thead>
       <tbody>
       @if ($order && $order->products->count())
-        @foreach($order->products as $product)
-        <tr>
-          <!-- Nosaukums + attēls ar linku -->
+      @foreach($order->products as $product)
+      <tr>
           <td>
-            <a href="{{route ('product', [$product->category->code, $product->code])}}">
-              <img src="{{ Storage::url($product->image) }}" alt="Retinols" width="50" class="mb-2 d-block mx-auto">
-              {{$product->name}}
-            </a>
+              <a href="{{ route('product', [$product->category->code, $product->code]) }}">
+                  <img src="{{ Storage::url($product->image) }}" alt="{{ $product->name }}" width="50">
+                  {{ $product->name }}
+              </a>
           </td>
 
           <!-- Daudzums ar + un - pogām -->
           <td>
-  <div class="d-flex flex-column align-items-center">
-    <form action="{{ route('basket-remove', $product) }}" method="POST" class="mb-1">
-      @csrf
-      <button type="submit" class="btn btn-danger btn-sm">
-        &minus;
-      </button>
-    </form>
-
-    <span class="fw-bold">{{ $product->pivot->count }}</span>
-
-    <form action="{{ route('basket-add', $product) }}" method="POST" class="mt-1">
-      @csrf
-      <button type="submit" class="btn btn-success btn-sm">
-        +
-      </button>
-    </form>
-  </div>
-</td>
+              <div class="d-flex flex-column align-items-center">
+                <form action="{{ route('basket-remove', ['id' => $product->id]) }}" method="POST" class="mb-1">
+                  @csrf
+                  <button type="submit" class="btn btn-danger btn-sm">−</button>
+              </form>
               
-            </div>
+                  <span class="fw-bold">{{ $product->pivot->count }}</span>
+                  <form action="{{ route('basket-add', ['id' => $product->id]) }}" method="POST" class="mt-1">
+                      @csrf
+                      <input type="hidden" name="available_count" value="{{ $product->count }}">
+                      <button type="submit" class="btn btn-success btn-sm">+</button>
+                  </form>
+                  <small class="text-muted">
+                      Pieejams: {{ $product->count }} | 
+                      @if($product->pivot->count >= $product->count)
+                          <span class="text-danger">Nav pieejams vairāk</span>
+                      @endif
+                  </small>
+              </div>
           </td>
-
-          <!-- Cena -->
-          <td>{{$product->price}} EUR</td>
-
-          <!-- Summa apmaksai -->
-          <td>{{$product->getPriceForCount()}} EUR</td>
-        </tr>
-        @endforeach
+          <td>{{ $product->price }} EUR</td>
+          <td>{{ $product->getPriceForCount() }} EUR</td>
+      </tr>
+      @endforeach      
         @else
   <tr>
     <td colspan="4">Grozs ir tukšs.</td>

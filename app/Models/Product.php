@@ -22,7 +22,8 @@ class Product extends Model
         'price',
         'hit',
         'new',
-        'recommend'
+        'recommend',
+        'count'
     ];
 
 
@@ -48,6 +49,10 @@ class Product extends Model
         return 'code';
     }
 
+    public function isAvailable(){
+        return $this->count > 0;
+    }
+    
     public function isHit(){
         return $this->hit === 1;
     }

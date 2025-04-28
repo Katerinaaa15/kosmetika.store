@@ -27,13 +27,17 @@
     <div class="card-body text-center">
       <h5 class="card-title">{{ $product->name }}</h5>
       <p class="card-text">{{ number_format($product->price,2) }} EUR</p>
-      <form action="{{ route('basket-add', $product) }}" method="POST" class="d-inline">
+      <form action="{{ route('basket-add', ['id' => $product->id]) }}" method="POST" class="d-inline">
         @csrf
-        <button type="submit" class="btn btn-outline-success btn-sm me-1">Grozā</button>
+        <input type="hidden" name="available_count" value="{{ $product->count }}">
+        @if($product->isAvailable())
+            <button type="submit" class="btn btn-outline-success btn-sm me-1">Grozā</button>
+        @else Nav pieejams
+        @endif
       </form>
       <a 
-        href="{{ route('product', [$product->category->code, $product->code]) }}" 
-        class="btn btn-outline-primary btn-sm"
+        href="{{ route('product', ['category' => $product->category->code, 'product' => $product->code]) }}"
+          class="btn btn-outline-primary btn-sm"
       >
         Apskatīt
       </a>
