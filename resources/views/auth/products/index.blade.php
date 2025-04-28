@@ -10,6 +10,7 @@
                 <th>Kods</th>
                 <th>Nosaukums</th>
                 <th>Cena</th>
+                <th>Daudzums</th>
                 <th>Darbība</th>
             </tr>
         </thead>
@@ -20,6 +21,7 @@
                 <td>{{ $product->code }}</td>
                 <td>{{ $product->name }}</td>
                 <td>{{ $product->price }} €</td>
+                <td>{{ $product->count }} </td>
                 <td>
                     <a href="{{ route('products.show', $product) }}" class="btn btn-success btn-sm me-2">Atvērt</a>
                     <a href="{{ route('products.edit', $product) }}" class="btn btn-warning btn-sm me-2">Rediģēt</a>
@@ -33,6 +35,7 @@
             @endforeach
         </tbody>
     </table>
+    {{ $products->links() }}
     <a class="btn btn-success" href="{{ route('products.create') }}">Pievienot produktu</a>
 </div>
 @endsection

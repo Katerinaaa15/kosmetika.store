@@ -49,6 +49,7 @@
                 <!-- Pievienot vairāk rindas pēc vajadzības -->
             </tbody>
         </table>
+        {{ $categories->links() }}
 
         <!-- Poga Pievienot kategoriju -->
         <a class="btn btn-success" type="button"

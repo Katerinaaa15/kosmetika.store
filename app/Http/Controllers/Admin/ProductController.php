@@ -15,7 +15,7 @@ class ProductController extends Controller
      */
     public function index()
 {
-    $products = Product::with('category')->get(); // ar kategoriju datiem
+    $products = Product::with('category')->paginate(10); // ar kategoriju datiem
     return view('auth.products.index', compact('products'));
 }
 

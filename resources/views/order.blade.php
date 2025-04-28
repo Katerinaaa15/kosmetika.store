@@ -14,7 +14,7 @@
   </div>
 
   <!-- Norādes teksts -->
-  <p class="text-center mb-3">Uzrakstiet Jūsu Vārdu, Uzvārdu un telefona numuru</p>
+  <p class="text-center mb-3">Uzrakstiet Jūsu Vārdu un telefona numuru</p>
 
   <!-- Forma -->
   <form action ="{{route('basket-confirm')}}" method="POST">

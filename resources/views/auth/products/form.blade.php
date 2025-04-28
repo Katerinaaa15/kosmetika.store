@@ -54,6 +54,15 @@
             </div>
         </div>
 
+
+        <div class="mb-3 row">
+          <label for="count" class="col-sm-2 col-form-label">Daudzums:</label>
+          <div class="col-sm-10">
+              @include('layouts.error', ['fieldName'=> 'count'])
+              <input type="number" step="0.01" name="count" class="form-control" value="{{ old('count', $product->count ?? '') }}" required>
+          </div>
+      </div>
+
         <div class="mb-3">
             <label for="description" class="form-label">Apraksts:</label>
             @include('layouts.error', ['fieldName'=> 'description'])

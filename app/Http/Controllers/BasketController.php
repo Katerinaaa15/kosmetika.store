@@ -22,21 +22,31 @@ class BasketController extends Controller
         return view('basket', compact('order'));
     }
 
-    public function basketConfirm (Request $request) {
-        $orderId = session('orderId');
-        if (is_null($orderId)) {
-            return redirect()->route(route:'index');
-        }
-        $order = Order::find($orderId);
-        $success=$order->saveOrder($request->name, $request->phone);
-        if ($success){
-            session()->flash('success', 'Jūsu pasūtījums ir pieņemts apstrādei!');
-        }else{
-            session()->flash('warning', 'Notika kļūda!');
-        }
-        
-        return redirect()->route(route:'index');
+    // BasketController.php
+
+public function basketConfirm(Request $request)
+{
+    $orderId = session('orderId');
+    if (is_null($orderId)) {
+        return redirect()->route('index');
     }
+
+    $order = Order::find($orderId);
+    $success = $order->saveOrder($request->name, $request->phone);
+
+    if ($success) {
+        // Samazini katra produkta daudzumu
+        foreach ($order->products as $product) {
+            $product->decrement('count', $product->pivot->count);
+        }
+
+        session()->flash('success', 'Jūsu pasūtījums ir pieņemts apstrādei!');
+    } else {
+        session()->flash('warning', 'Notika kļūda!');
+    }
+
+    return redirect()->route('index');
+}
 
     public function basketPlace() {
         $orderId = session('orderId');
@@ -48,39 +58,46 @@ class BasketController extends Controller
 
     }
 
-    public function basketAdd($productId) 
-{
-    $orderId = session('orderId');
+    public function basketAdd(Request $request, $productId)
+    {
+        $product = Product::findOrFail($productId);
+        $availableCount = $request->input('available_count', 0);
+        $orderId = session('orderId');
     
-    if (is_null($orderId)) {
-        // Izveido jaunu pasūtījumu un saglabā to sesijā
-        $order = Order::create();  // <- šeit saglabā objektu, nevis ID
-        session(['orderId' => $order->id]);
-    } else {
-        $order = Order::find($orderId);
-    }
-
-    // Pārbaudi vai pasūtījumā jau ir šis produkts
-    if ($order->products->contains($productId)) {
-        $pivotRow = $order->products()->where('product_id', $productId)->first()->pivot;
-        $pivotRow->count++;
-        $pivotRow->update();
-    } else {
-        // Ja nav, pievieno ar count = 1
-        $order->products()->attach($productId, ['count' => 1]);
-    }
-
-    if(Auth::check()){
-        $order->user_id=Auth::id();
-        $order->save();
+        if (is_null($orderId)) {
+            $order = Order::create();
+            session(['orderId' => $order->id]);
+        } else {
+            $order = Order::find($orderId);
+        }
+    
+        // Pārbauda, vai pieprasītais daudzums nepārsniedz pieejamo daudzumu
+        $requestedCount = $order->products()->where('product_id', $productId)->sum('order_product.count') + 1;
+        if ($requestedCount > $availableCount) {
+            return redirect()->route('product', $product)->withErrors([
+                'quantity' => 'Nav pietiekami daudz preces noliktavā.'
+            ]);
+        }
+    
+        // Ja viss ir kārtībā, pievieno preci grozam
+        if ($order->products->contains($productId)) {
+            $pivotRow = $order->products()->where('product_id', $productId)->first()->pivot;
+            $pivotRow->count++;
+            $pivotRow->update();
+        } else {
+            $order->products()->attach($productId, ['count' => 1]);
+        }
+    
+        if (Auth::check()) {
+            $order->user_id = Auth::id();
+            $order->save();
+        }
+    
+        session()->flash('success', 'Pievienots produkts: ' . $product->name);
+        return redirect()->route('basket');
     }
     
-    $product=Product::find($productId);
-    session()->flash('success', 'Pievienots produkts: ' . $product->name);
-
-    return redirect()->route('basket');
-}
-
+    
     public function basketRemove ($productId)
     {
         $orderId = session(key:'orderId');

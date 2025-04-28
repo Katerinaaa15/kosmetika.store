@@ -31,6 +31,7 @@ class ProductRequest extends FormRequest
         'hit'         => 'sometimes|boolean',
         'new'         => 'sometimes|boolean',
         'recommend'   => 'sometimes|boolean',
+        'count'       => 'required|numeric|min:0',
     ];
 
     if ($this->routeIs('products.update')) {

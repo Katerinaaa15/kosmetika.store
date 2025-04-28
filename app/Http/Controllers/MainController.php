@@ -6,11 +6,14 @@ use App\Models\Category;
 use App\Models\Product;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
+
 
 class MainController extends Controller
 {
     public function index(Request $request)
 {
+    Log::info($request->ip());
     // 1) Validē
     $validated = $request->validate(
         [
