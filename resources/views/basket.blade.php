@@ -39,12 +39,16 @@
               
                   <span class="fw-bold">{{ $product->pivot->count }}</span>
                   <form action="{{ route('basket-add', ['id' => $product->id]) }}" method="POST" class="mt-1">
-                      @csrf
-                      <input type="hidden" name="available_count" value="{{ $product->count }}">
-                      <button type="submit" class="btn btn-success btn-sm">+</button>
-                  </form>
+                    @csrf
+                    <input type="hidden" name="available_count" value="{{ $product->count }}">
+                    <button type="submit" class="btn btn-success btn-sm"
+                        @if($product->pivot->count >= $product->count) disabled @endif>
+                        +
+                    </button>
+                </form>
+                
                   <small class="text-muted">
-                      Pieejams: {{ $product->count }} | 
+                      Pieejams: {{ $product->count }} 
                       @if($product->pivot->count >= $product->count)
                           <span class="text-danger">Nav pieejams vairāk</span>
                       @endif

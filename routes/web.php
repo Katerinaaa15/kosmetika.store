@@ -8,7 +8,15 @@ use App\Http\Controllers\BasketController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\ProductController;
+use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Redirect;
 
+Route::get('/lang/{locale}', function ($locale) {
+     if (in_array($locale, ['lv', 'en'])) {
+         Session::put('locale', $locale);
+     }
+     return redirect()->back();
+ })->name('lang.switch');
 // 1) Autentifikācija
 Auth::routes([
     'reset'   => false,
@@ -76,4 +84,6 @@ Route::get('/{category:code}/{product:code}', [MainController::class,'product'])
 // 2) tikai pēc tam vienkārša kategorija
 Route::get('/{category:code}', [MainController::class,'category'])
      ->name('category');
+
+    
 
