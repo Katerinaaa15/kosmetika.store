@@ -22,9 +22,9 @@
         @csrf
         <input type="hidden" name="available_count" value="{{ $product->count }}">
         @if($product->isAvailable())
-            <button type="submit" class="btn btn-success btn-lg">Pievienot grozam</button>
+            <button type="submit" class="btn btn-success btn-lg">{{ __('Pievienot grozam<')}}/button>
         @else
-            <span class="text-danger">Nav pieejams</span>
+            <span class="text-danger">{{ __('Nav pieejams')}}</span>
         @endif
     </form>
     @if($errors->any())

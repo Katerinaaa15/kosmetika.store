@@ -6,6 +6,8 @@ use App\Models\Order;
 use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Mail\OrderConfirmed;
+use Illuminate\Support\Facades\Mail;
 
 
 class BasketController extends Controller
@@ -24,29 +26,42 @@ class BasketController extends Controller
 
     // BasketController.php
 
-public function basketConfirm(Request $request)
-{
-    $orderId = session('orderId');
-    if (is_null($orderId)) {
+    public function basketConfirm(Request $request)
+    {
+        $rules = [
+            'name' => 'required|string|max:255',
+            'phone' => 'required|string|max:20',
+        ];
+    
+        if (!Auth::check()) {
+            $rules['email'] = 'required|email|max:255';
+        }
+    
+        $validated = $request->validate($rules);
+        $email = Auth::check() ? Auth::user()->email : $request->email;
+        $orderId = session('orderId');
+        if (is_null($orderId)) {
+            return redirect()->route('index');
+        }
+    
+        $order = Order::find($orderId);
+        $success = $order->saveOrder($request->name, $request->phone, $email);
+    
+        if ($success) {
+            foreach ($order->products as $product) {
+                $product->decrement('count', $product->pivot->count);
+            }
+    
+            // Nosūtīt apstiprinājuma e-pastu
+            Mail::to($order->email)->send(new OrderConfirmed($order));
+    
+            session()->flash('success', 'Jūsu pasūtījums ir pieņemts apstrādei!');
+        } else {
+            session()->flash('warning', 'Notika kļūda!');
+        }
+    
         return redirect()->route('index');
     }
-
-    $order = Order::find($orderId);
-    $success = $order->saveOrder($request->name, $request->phone);
-
-    if ($success) {
-        // Samazini katra produkta daudzumu
-        foreach ($order->products as $product) {
-            $product->decrement('count', $product->pivot->count);
-        }
-
-        session()->flash('success', 'Jūsu pasūtījums ir pieņemts apstrādei!');
-    } else {
-        session()->flash('warning', 'Notika kļūda!');
-    }
-
-    return redirect()->route('index');
-}
 
     public function basketPlace() {
         $orderId = session('orderId');

@@ -23,10 +23,27 @@
       <input type="text" name="name" class="form-control" id="name" placeholder="Jūsu vārds">
     </div>
 
+    
     <div class="mb-4">
       <label for="phone" class="form-label">Telefona numurs</label>
       <input type="tel" name="phone" class="form-control" id="phone" placeholder="Jūsu tālruņa numurs">
     </div>
+    @guest
+    <div class="mb-4">
+      <label for="phone" class="form-label">Email</label>
+      <input type="email" name="email" class="form-control" id="email" placeholder="Jūsu epasta adrese">
+    </div>
+    @endguest
+    @if ($errors->any())
+    <div class="alert alert-danger">
+        <ul>
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+@endif
+
 
     <!-- Poga -->
     <div class="text-center">
