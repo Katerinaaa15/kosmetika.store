@@ -6,14 +6,14 @@
 
 <div class="container mt-5">
 
-    <!-- Virsraksts ar pasūtījuma numuru -->
+    
     <h1 class="mb-4">Pasūtījums Nr. {{$order->id}}<span class="fw-bold"></span></h1>
 
-    <!-- Klienta dati -->
+    
     <p><strong>Pasūtītājs:</strong> <span>{{$order->name}}</span></p>
     <p><strong>Telefona numurs:</strong> <span>{{$order->phone}}</span></p>
 
-    <!-- Tabula ar pasūtījuma saturu -->
+    
     <div class="table-responsive">
       <table class="table table-bordered text-center">
         <thead class="table-light">
@@ -28,7 +28,7 @@
             @foreach ($order->products as $product )
             <tr>
                 <td>
-                  <!-- Attēls un nosaukums -->
+                  
                   <a href="{{ route('product', [$product->category->code, $product->code]) }}">
 
                      <img src="{{Storage::url($product->image)}}" width="50" class="me-2 align-middle" >
@@ -36,7 +36,7 @@
                   </a>
                 </td>
                 <td>
-                  <!-- daudzums -->
+                  
                   1
                 </td>
                 <td>
@@ -48,7 +48,7 @@
               </tr>
             @endforeach
           
-          <!-- Šeit vari pievienot vairāk rindu pēc vajadzības -->
+          
         </tbody>
         <tfoot>
           <tr>

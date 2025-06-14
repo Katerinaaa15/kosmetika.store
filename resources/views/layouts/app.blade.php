@@ -5,19 +5,19 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <!-- CSRF Token -->
+    
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <title>{{ config('app.name', 'Laravel') }}</title>
 
-    <!-- Fonts -->
+    
     <link rel="dns-prefetch" href="//fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=Nunito" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 
 
-    <!-- Scripts -->
+    
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 
@@ -43,23 +43,26 @@
 
                         @admin
                         <li class="nav-item">
-                            <a class="nav-link text-dark" href="{{ route('categories.index') }}">Kategorijas</a>
+                            <a class="nav-link text-dark" href="{{ route('admin.categories.index') }}">Kategorijas</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" href="{{ route('products.index') }}">Produkti</a>
+                            <a class="nav-link text-dark" href="{{ route('admin.products.index') }}">Produkti</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link text-dark" href="{{ route('home') }}">Pasūtījumi</a>
                         </li>
+                        <li class="nav-item">
+    <a class="nav-link text-dark" href="{{ route('admin.users.control') }}">Lietotāju pārvldība</a>
+</li>
 
-                        @endadmin
+ @endadmin
 
-                    </ul>
+ </ul>
 
 
-                    <!-- Right Side Of Navbar -->
+                    
                     <ul class="navbar-nav ms-auto">
-                        <!-- Authentication Links -->
+                        
                         @guest
                             @if (Route::has('login'))
                                 <li class="nav-item">

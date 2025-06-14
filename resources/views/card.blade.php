@@ -26,7 +26,10 @@
     >
     <div class="card-body text-center">
       <h5 class="card-title">{{ __($product->name) }}</h5>
-      <p class="card-text">{{ number_format($product->price,2) }} EUR</p>
+      <p class="card-text">
+    {{ __('Price: :price EUR', ['price' => localized_price($product->price)]) }}
+</p>
+
       <form action="{{ route('basket-add', ['id' => $product->id]) }}" method="POST" class="d-inline">
         @csrf
         <input type="hidden" name="available_count" value="{{ $product->count }}">

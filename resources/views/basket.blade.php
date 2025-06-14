@@ -4,7 +4,7 @@
 
 @section('content')
 
-<!-- Kategoriju saturs -->
+
 <h1 class="text-center mb-3">Grozs</h1>
   <h4 class="text-center mb-4">Pasūtījumu noformēšana</h4>
 
@@ -29,7 +29,7 @@
               </a>
           </td>
 
-          <!-- Daudzums ar + un - pogām -->
+          
           <td>
               <div class="d-flex flex-column align-items-center">
                 <form action="{{ route('basket-remove', ['id' => $product->id]) }}" method="POST" class="mb-1">
@@ -69,7 +69,7 @@
     </table>
   </div>
 
-  <!-- Kopējā summa -->
+  
   <div class="d-flex justify-content-between align-items-center mt-4">
     <h5>Kopējā summa:</h5>
     <h4 class="text-success">
@@ -78,7 +78,7 @@
 
   </div>
 
-  <!-- Poga -->
+  
   <div class="btn-group pull-right" role="group">
     <a type="button" class="btn btn-success" href="{{route('basket-place')}}">Noformēt pirkumu</a>
   </div>

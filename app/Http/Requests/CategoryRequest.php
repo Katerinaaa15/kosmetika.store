@@ -26,7 +26,7 @@ class CategoryRequest extends FormRequest
             'name'=>'required |min:3|max:255',
             'description'=>'required |min:5',
         ];
-        if($this->route()->named('categories.store')){
+        if($this->route()->named('admin.categories.store')){
             $rules['code'] .= '|unique:categories,code';
 
         }
