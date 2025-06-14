@@ -40,7 +40,16 @@
         "Ananasu enzīmi 20gr.": "Pineapple Enzymes 20gr.",
         "Luryl-glucoside 0,5l.": "Luryl-glucoside 0.5l.",
         "Betaine 0,5l.": "Betaine 0.5l.",
-        "Grozs": "Basket"
+        "Grozs": "Basket",
+        "auth.failed": "These credentials do not match our records.",
+        "auth.banned": "Your account has been banned. Please contact the administrator.",
+        "Seko mums": "Follow us",
+        "Par mums": "About us",
+        "Kontakti": "Contacts",
+        "E-pasts:": "E-mail:",
+        "Tālrunis:": "Phone:",
+        "Ieiet/Reģistrēties": "Login/Register",
+        "Price: :price EUR": "Price: :price EUR"
       
       
     

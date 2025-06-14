@@ -2,31 +2,38 @@
 
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Carbon\Carbon;
 
 class User extends Authenticatable
 {
-    /** @use HasFactory<\Database\Factories\UserFactory> */
     use HasFactory, Notifiable;
 
     /**
-     * The attributes that are mass assignable.
+     * Norāda, ka timestamps ir aktīvs
      *
-     * @var list<string>
+     * @var bool
+     */
+    public $timestamps = true;
+
+    /**
+     * Atribūti, kurus drīkst masveidā aizpildīt.
+     *
+     * @var array<int, 
      */
     protected $fillable = [
         'name',
         'email',
         'password',
+        'banned_at',
     ];
 
     /**
-     * The attributes that should be hidden for serialization.
+     * Atribūti, kuri tiks paslēpti.
      *
-     * @var list<string>
+     * @var array<int, 
      */
     protected $hidden = [
         'password',
@@ -34,23 +41,31 @@ class User extends Authenticatable
     ];
 
     /**
-     * Get the attributes that should be cast.
+     * Automātiski pārvēršamie atribūti.
      *
-     * @return array<string, string>
+     * @var array<string, 
      */
-    protected function casts(): array
+    protected $casts = [
+        'email_verified_at' => 'datetime',
+        'password' => 'hashed',
+        'banned_at' => 'datetime',
+    ];
+
+    
+    public function isBanned()
     {
-        return [
-            'email_verified_at' => 'datetime',
-            'password' => 'hashed',
-        ];
+        return $this->banned_at !== null;
     }
 
-    public function isAdmin(){
+    
+    public function isAdmin()
+    {
         return $this->is_admin === 1;
     }
 
-    public function orders(){
+   
+    public function orders()
+    {
         return $this->hasMany(Order::class);
     }
 }

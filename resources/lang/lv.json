@@ -40,7 +40,18 @@
         "Ananasu enzīmi 20gr.": "Ananasu enzīmi 20gr.",
         "Luryl-glucoside 0,5l.": "Luryl-glikozīds 0,5l.",
         "Betaine 0,5l.": "Betaīns 0,5l.",
-        "Grozs": "Grozs"
+        "Grozs": "Grozs",
+        "auth.failed": "Šie akreditācijas dati neatbilst mūsu ierakstiem.",
+        "auth.banned": "Jūsu konts ir bloķēts. Lūdzu, sazinieties ar administratoru.",
+        "Seko mums": "Seko mums",
+        "Par mums": "Par mums",
+        "Kontakti": "Kontakti",
+        "Piegāde": "Piegāde",
+        "Maksājums": "Maksājums",
+        "Tālrunis:": "Tālrunis",
+        "E-pasts:": "E-pasts",
+        "Adrese": "Adrese",
+        "Ieiet/Reģistrēties": "Ieiet/Reģistrēties",
+        "Price: :price EUR": "Cena: :price EUR"
       }
       
-

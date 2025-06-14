@@ -1,4 +1,4 @@
-{{-- resources/views/product.blade.php --}}
+
 @extends('master')
 
 @section('title', $product->name)
@@ -15,14 +15,20 @@
     </div>
     <div class="col-md-6">
       <h1>{{ $product->name }}</h1>
-      <h4 class="text-success">{{ number_format($product->price,2) }} EUR</h4>
+      <h4 class="text-success">
+    {{ __('Price: :price EUR', ['price' => localized_price($product->price)]) }}
+</h4>
+
       <p class="mt-4">{{ $product->description }}</p>
 
       <form action="{{ route('basket-add', ['id' => $product->id]) }}" method="POST" class="mt-4">
         @csrf
         <input type="hidden" name="available_count" value="{{ $product->count }}">
         @if($product->isAvailable())
-            <button type="submit" class="btn btn-success btn-lg">{{ __('Pievienot grozam<')}}/button>
+           <button type="submit" class="btn btn-success btn-lg">
+    Pievienot grozam
+</button>
+
         @else
             <span class="text-danger">{{ __('Nav pieejams')}}</span>
         @endif

@@ -23,9 +23,9 @@
 <form method="POST" 
 enctype="multipart/form-data"
 @isset($category)
-    action="{{ route('categories.update', $category) }}"
+    action="{{ route('admin.categories.update', $category) }}"
 @else
-    action="{{ route('categories.store') }}"
+    action="{{ route('admin.categories.store') }}"
 @endisset
 >
     <div>

@@ -15,31 +15,33 @@ class ProductController extends Controller
      */
     public function index()
 {
-    $products = Product::with('category')->paginate(10); // ar kategoriju datiem
+    $products = Product::with('category')->paginate(10); 
     return view('auth.products.index', compact('products'));
 }
 
 public function create()
 {
+    
     return view('auth.products.form');
 }
 
 public function store(ProductRequest $request)
 {
+
     $data = $request->validated();
 
-    // failu uploads
+    
     if ($request->hasFile('image')) {
         $data['image'] = $request->file('image')->store('products','public');
     }
 
-    // Apstrādā ķeksīšus pievienojot 1/0
+    
     foreach (['hit','new','recommend'] as $field) {
         $data[$field] = $request->has($field) ? 1 : 0;
     }
 
     Product::create($data);
-    return redirect()->route('products.index');
+    return redirect()->route('admin.products.index');
 }
 
 public function show(Product $product)
@@ -66,12 +68,12 @@ public function update(ProductRequest $request, Product $product)
     }
 
     $product->update($data);
-    return redirect()->route('products.index');
+    return redirect()->route('admin.products.index');
 }
 
 public function destroy(Product $product)
 {
     $product->delete();
-    return redirect()->route('products.index');
+    return redirect()->route('admin.products.index');
 }
 }

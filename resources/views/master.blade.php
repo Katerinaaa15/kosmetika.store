@@ -9,14 +9,14 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
   <style>
-    /* Noņem underline, noklusējuma krāsa balta ar caurspīdību */
+    
 
     .navbar-brand {
-      /* Rozā krāsa */
+      
       color: #ff69b4 !important;
-      /* Roboto fonts */
+     
       font-family: 'Roboto', sans-serif;
-      font-weight: 700;    /* treknāks variants, lai izceltos */
+      font-weight: 700;    
       font-size: 1.5rem;
     }
 
@@ -35,14 +35,14 @@
       color: rgba(255,255,255,0.75) !important;
       text-decoration: none !important;
     }
-    /* Hover stāvoklis */
+    
     .navbar-nav .nav-link:hover,
     .navbar-nav .dropdown-item:hover {
       color: #fff !important;
       background-color: rgba(255,255,255,0.1) !important;
       border-radius: 0.25rem;
     }
-    /* Aktīvais stāvoklis */
+    
     .navbar-nav .nav-link.active,
     .navbar-nav .dropdown-item.active {
       color: #fff !important;
@@ -65,7 +65,7 @@
     <div class="collapse navbar-collapse" id="navMenu">
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
 
-        {{-- Visi produkti --}}
+        
         <li class="nav-item">
           <a class="nav-link" href="{{ route('index') }}">
             {{ __('Visi produkti')}}
@@ -73,14 +73,14 @@
         </li>
         
 
-        {{-- Produktu kategorijas dropdown --}}
+        
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle @if(Route::is('categories.*') || Route::is('category')) active @endif"
              href="#" id="categoriesDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
              {{ __('Produktu kategorijas')}}
           </a>
           <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="categoriesDropdown">
-            {{--  Visas kategorijas  --}}
+            
             <li>
               <a class="dropdown-item @if(Route::currentRouteNamed('categories.index')) active @endif"
                  href="{{ route('categories') }}">
@@ -88,7 +88,7 @@
               </a>
             </li>
         
-            {{-- Dinamiskie ieraksti no DB --}}
+            
             @foreach($categories as $cat)
   <li>
     <a class="dropdown-item
@@ -102,7 +102,7 @@
           </ul>
         </li>
         
-        {{-- Grozs --}}
+        
         <li class="nav-item">
           <a class="nav-link @if(Route::currentRouteNamed('basket')) active @endif"
              href="{{ route('basket') }}">
@@ -115,7 +115,7 @@
       <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
         @guest
           <li class="nav-item">
-            <a class="nav-link" href="{{ route('login') }}">{{ __('Ieiet')}}</a>
+            <a class="nav-link" href="{{ route('login') }}">{{ __('Ieiet/Reģistrēties')}}</a>
           </li>
         @endguest
 
@@ -135,27 +135,20 @@
             <a class="nav-link" href="{{ route('get-logout') }}">{{ __('Iziet')}}</a>
           </li>
         @endauth
-      </ul>
-      <ul class="navbar-nav ms-3">
-        <li class="nav-item">
-          <a class="nav-link text-white px-2" href="{{ route('lang.switch', ['locale' => 'lv']) }}">Latviešu</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link text-white px-2" href="{{ route('lang.switch', ['locale' => 'en']) }}">English</a>
-        </li>
-      </ul>
+        <ul class="navbar-nav ms-3 ps-3" style="border-left: 2px solid #e83e8c;">
+          <li class="nav-item">
+            <a class="nav-link text-white px-2" href="{{ route('lang.switch', ['locale' => 'lv']) }}">Latviešu</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link text-white px-2" href="{{ route('lang.switch', ['locale' => 'en']) }}">English</a>
+          </li>
+        </ul>
       
-
-
-    
-
-      <form class="d-flex ms-3" role="search">
-        <input class="form-control me-2" type="search" placeholder="Meklēt">
-        <button class="btn btn-outline-light" type="submit">{{ __('Meklēt')}}</button>
-      </form>
     </div>
   </div>
 </nav>
+
+
 
 <div class="container mt-4">
   @if(session()->has('success'))
@@ -171,23 +164,24 @@
 
   @yield('content')
 </div>
-<footer class="bg-dark text-white py-3">
+<footer class="bg-dark text-white py-4 mt-5">
+
   <div class="container d-flex justify-content-between align-items-center flex-wrap" style="font-size: 0.85rem;">
 
-      <!-- Kontaktinformācija centrā ar rozā virsrakstu -->
+      
       <div class="text-center mx-auto">
           <p class="mb-1" style="color: #e83e8c; font-size: 1.1rem; font-weight: bold;">Kosmētiskā laboratorija</p>
           <p class="mb-1">Rīga, Lāčplēša iela 101, LV-1103</p>
-          <p class="mb-1">Tālrunis: <a href="tel:+37128988975" class="text-white text-decoration-none">+371 28988975</a></p>
-          <p class="mb-0">E-pasts: <a href="mailto:kosmetika@gmail.com" class="text-white text-decoration-none">kosmetika@gmail.com</a></p>
+          <p class="mb-1">{{ __('Tālrunis:')}} <a href="tel:+37128988975" class="text-white text-decoration-none">+371 28988975</a></p>
+          <p class="mb-0">{{ __('E-pasts:')}} <a href="mailto:kosmetika@gmail.com" class="text-white text-decoration-none">kosmetika@gmail.com</a></p>
       </div>
 
-      <!-- Instagram ikona pa labi, vertikāli vidū -->
+      
       <div class="d-flex flex-column align-items-center ms-3">
           <a href="https://www.instagram.com/formulators_hub_kenya/" target="_blank" rel="noopener noreferrer" class="text-white fs-4">
               <i class="fab fa-instagram"></i>
           </a>
-          <small style="font-size: 0.75rem;">Seko mums</small>
+          <small style="font-size: 0.75rem;">{{ __('Seko mums')}}</small>
       </div>
 
   </div>

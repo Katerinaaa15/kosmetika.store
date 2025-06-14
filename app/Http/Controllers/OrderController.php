@@ -8,20 +8,16 @@ use Illuminate\Support\Facades\Auth;
 
 class OrderController extends Controller
 {
-    /**
-     * Rāda pasūtījumus:
-     * - admins redz VISUS status=1 pasūtījumus,
-     * - parastais lietotājs tikai savus status=1 pasūtījumus.
-     */
+    
     public function index()
     {
         if (Auth::user()->isAdmin()) {
-            // Adminam — visi status=1 pasūtījumi
+            
             $orders = Order::where('status', 1)
                            ->orderBy('created_at', 'desc')
                            ->paginate(10);
         } else {
-            // Parastajam lietotājam — tikai viņa pasūtījumi ar status=1
+            
             $orders = Auth::user()
                           ->orders()
                           ->where('status', 1)
@@ -32,11 +28,7 @@ class OrderController extends Controller
         return view('auth.orders.index', compact('orders'));
     }
 
-    /**
-     * Apskata konkrētu pasūtījumu:
-     * - adminam atļauts jebkurš,
-     * - parastajam tikai savs.
-     */
+    
     public function show(Order $order)
     {
         if (! Auth::user()->isAdmin()) {

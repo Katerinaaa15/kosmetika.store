@@ -6,11 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 class Product extends Model
 {
-    //public function getCategory () 
-    //{
-     //   return Category::find($this->category_id);
-        
-    //}
+    
     use HasFactory;
 
     protected $fillable = [

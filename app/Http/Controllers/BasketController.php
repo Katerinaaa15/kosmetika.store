@@ -20,11 +20,11 @@ class BasketController extends Controller
             $order = Order::find($orderId);
         }
     
-        // Nodrošini, ka `$order` ir Order objekts vai null
+        
         return view('basket', compact('order'));
     }
 
-    // BasketController.php
+    
 
     public function basketConfirm(Request $request)
     {
@@ -52,7 +52,7 @@ class BasketController extends Controller
                 $product->decrement('count', $product->pivot->count);
             }
     
-            // Nosūtīt apstiprinājuma e-pastu
+            
             Mail::to($order->email)->send(new OrderConfirmed($order));
     
             session()->flash('success', 'Jūsu pasūtījums ir pieņemts apstrādei!');
@@ -86,7 +86,7 @@ class BasketController extends Controller
             $order = Order::find($orderId);
         }
     
-        // Pārbauda, vai pieprasītais daudzums nepārsniedz pieejamo daudzumu
+        
         $requestedCount = $order->products()->where('product_id', $productId)->sum('order_product.count') + 1;
         if ($requestedCount > $availableCount) {
             return redirect()->route('product', $product)->withErrors([
@@ -94,7 +94,7 @@ class BasketController extends Controller
             ]);
         }
     
-        // Ja viss ir kārtībā, pievieno preci grozam
+        
         if ($order->products->contains($productId)) {
             $pivotRow = $order->products()->where('product_id', $productId)->first()->pivot;
             $pivotRow->count++;

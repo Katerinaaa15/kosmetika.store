@@ -7,7 +7,7 @@
     <div class="container mt-5">
         <h2>Kategorijas</h2>
 
-        <!-- Tabula -->
+        
         <table class="table table-striped">
             <thead>
                 <tr>
@@ -25,17 +25,17 @@
                 <td>{{$category->code}}</td>
                 <td>{{$category->name}}</td>
                 <td>
-                    <!-- Poga Atvērt ar href -->
-                    <a href="{{ route('categories.show', $category) }}" class="btn btn-success btn-sm me-2">Atvērt</a>
+                    
+                    <a href="{{ route('admin.categories.show', $category) }}" class="btn btn-success btn-sm me-2">Atvērt</a>
             
-                    <!-- Poga Rediģēt ar form action -->
+                    
                     <form action="" method="POST" class="d-inline-block">
                         @csrf
-                        <a href="{{ route('categories.edit', $category) }}" class="btn btn-warning btn-sm me-2">Rediģēt</a>
+                        <a href="{{ route('admin.categories.edit', $category) }}" class="btn btn-warning btn-sm me-2">Rediģēt</a>
                     </form>
             
-                    <!-- Poga Noņemt ar form action -->
-                    <form action="{{ route('categories.destroy', $category) }}" method="POST" class="d-inline-block">
+                    
+                    <form action="{{ route('admin.categories.destroy', $category) }}" method="POST" class="d-inline-block">
                         @csrf
                         @method('DELETE')
                         <button type="submit" class="btn btn-danger btn-sm">Noņemt</button>
@@ -46,14 +46,14 @@
                 
             @endforeach
             
-                <!-- Pievienot vairāk rindas pēc vajadzības -->
+                
             </tbody>
         </table>
         {{ $categories->links() }}
 
-        <!-- Poga Pievienot kategoriju -->
+        
         <a class="btn btn-success" type="button"
-        href="{{ route('categories.create') }}">Pievienot kategoriju</a>
+        href="{{ route('admin.categories.create') }}">Pievienot kategoriju</a>
     </div>
 
 

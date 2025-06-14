@@ -4,7 +4,7 @@
 
 @section('content')
 
-<!-- Kategoriju saturs -->
+
 <div class="container my-5">
   <h2 class="text-center mb-4">Produktu kategorijas</h2>
   <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4 justify-content-center">
@@ -16,7 +16,7 @@
              width="120"
              height="100">
 
-        <!-- saitei liksim utilītklases: no pasvītrojuma, melna krāsa, normāls svars -->
+        
         <a href="{{ route('category', $category->code) }}"
            class="text-decoration-none">
           <h5 class="fw-normal text-dark">

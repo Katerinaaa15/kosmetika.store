@@ -1,3 +1,5 @@
-@error($fieldName)
-    <div class="alert alert-danger">{{ $message }}</div>
-@enderror
+@if($errors->has($fieldName))
+    <div class="text-danger small">
+        {{ $errors->first($fieldName) }}
+    </div>
+@endif

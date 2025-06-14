@@ -27,15 +27,15 @@ class ProductRequest extends FormRequest
         'description' => 'required|min:5',
         'price'       => 'required|numeric|min:0',
         'category_id' => 'required|exists:categories,id',
-        'image'       => 'nullable|image|max:2048',
+        'image'       => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
         'hit'         => 'sometimes|boolean',
         'new'         => 'sometimes|boolean',
         'recommend'   => 'sometimes|boolean',
         'count'       => 'required|numeric|min:0',
     ];
 
-    if ($this->routeIs('products.update')) {
-        // unikālums, izņem šo pašu ierakstu
+   
+    if ($this->routeIs('admin.products.update')) {
         $rules['code'] = "required|min:3|max:255|unique:products,code,{$this->route('product')->id}";
     }
 
@@ -43,11 +43,25 @@ class ProductRequest extends FormRequest
 }
 
 
-    public function messages (){
-        return [
-            'required' => 'Lauks :attribute ir obligāts, lūdzu aizpildijiet!',
-            'min' => 'Laukam :attribute ir jāsatūr vismaz :min simbolus',
-            'price.min'=>'Laukam cena, cenai ir jābūt lielākai par :min',
-        ];
-    }
+public function messages()
+{
+    return [
+        'required' => 'Lauks :attribute ir obligāts, lūdzu aizpildiet!',
+        'min' => 'Laukam :attribute jābūt vismaz :min simbolus garam.',
+        'price.min' => 'Laukam cena jābūt lielākai par :min.',
+    ];
+}
+
+public function attributes()
+{
+    return [
+        'code' => 'kods',
+        'name' => 'nosaukums',
+        'description' => 'apraksts',
+        'price' => 'cena',
+        'category_id' => 'kategorija',
+        'count' => 'daudzums',
+        'image' => 'attēls',
+    ];
+}
 }
